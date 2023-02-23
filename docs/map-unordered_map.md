@@ -4,7 +4,7 @@
 
 ### Comparison table
 
-type | `map` | `unordered map`
+`` | `map` | `unordered map`
 --: | --- | ---
 Member types | `key_compare` `reverse_iterator` `const_reverse_iterator` | `key_equal` `local_iterator` `hasher` `const_local_iterator` 
 Member classes | `value_compare` | 
