@@ -1,4 +1,4 @@
-# Comparison `map` with `unordered map`
+# Comparing `map` with `unordered map`
 
 ## Individaulity
 
