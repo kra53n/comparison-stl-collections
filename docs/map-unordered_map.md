@@ -2,6 +2,15 @@
 
 ## Individaulity
 
+### Comparison table
+
+type | `map` | `unordered map`
+--: | --- | ---
+Member types | `key_compare` `reverse_iterator` `const_reverse_iterator` | `key_equal` `local_iterator` `hasher` `const_local_iterator` 
+Member classes | `value_compare` | 
+Member functions | `key_comp` `rbegincrbegin` `lower_bound` `rendcrend` `upper_bound` `value_comp` | `end(size_type) cend(size_type)` `bucket_size` `max_bucket_count` `reserve` `begin(size_type) cbegin(size_type)` `bucket` `max_load_factor` `key_eq` `bucket_count` `load_factor` `rehash` `hash_function` 
+Non-member classes | `operator<` `operator<=` `operator>` `operator>=` `operator<=>` | 
+
 ### `map`
 
 #### Member types
