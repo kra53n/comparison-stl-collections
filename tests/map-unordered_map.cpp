@@ -41,7 +41,7 @@ template<typename T>
 int const_forward_iteration(int num, int seed) {
   T* m = create<T>(num, seed);
   auto start = chrono::steady_clock::now();
-  for (auto i = m->begin(); i != m->end(); i++) {
+  for (auto i = m->cbegin(); i != m->cend(); i++) {
     int tmp = (*i).second;
     int res_tmp = tmp * tmp;
   }
