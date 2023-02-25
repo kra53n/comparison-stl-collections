@@ -117,3 +117,9 @@ Non-member classes | `operator<` `operator<=` `operator>` `operator>=` `operator
 - `operator!=`
 - `std::swap`
 - `erase_if`
+
+## Graphics
+
+### `clear`
+
+![map-unordered_map_clear](https://user-images.githubusercontent.com/59062496/221380842-701793a7-a557-4b54-aab0-79d5557745fb.png)
