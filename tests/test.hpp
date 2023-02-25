@@ -36,11 +36,15 @@ void test(
   std::string operation,
   int (*func)(int, int)
 ) {
-  for (int num = 400'000, seed = 333; num <= 52'428'800; num += 300'000, seed++) {
+  int seed = 333;
+  //                    1 mb
+  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 100 };
+  for (auto num : elems_num) {
     file << "collection " << collection << std::endl;
     file << "operation " << operation << std::endl;
     file << "elems_num " << num << std::endl;
     file << "time " << average(func, num, seed) << std::endl;
     file << std::endl;
+	seed++;
   }
 }
