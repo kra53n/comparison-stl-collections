@@ -14,11 +14,12 @@ int timeit() {
   static chrono::steady_clock::time_point start, end;
   if (is_started) {
     end = chrono::steady_clock::now();
-  } else {
-    start = end = chrono::steady_clock::now();
+	is_started = false;
+	return (end - start) / 1ms;
   }
-  is_started = !is_started;
-  return (end - start) / 1ms;
+  start = chrono::steady_clock::now();
+  is_started = true;
+  return 0;
 }
 
 // Count average time operation exectution. If operation time execution less
@@ -27,11 +28,13 @@ int timeit() {
 int average(int (*func)(int, int), int num, int seed) {
   std::vector<int> vec;
   int common_time = 0;
-  do {
-    int tmp = func(num, seed);
-    common_time += tmp;
-    vec.push_back(tmp);
-  } while(common_time < 500);
+  for (int i = 0; i < 5; i++) {
+    do {
+      int tmp = func(num, seed);
+      common_time += tmp;
+      vec.push_back(tmp);
+    } while(common_time < 500);
+  }
   std::sort(vec.begin(), vec.end());
   int _sum = 0;
   int count = 0;
@@ -52,7 +55,7 @@ void test(
 ) {
   int seed = 333;
   //                    1 mb
-  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 20, 131'072 * 30 };
+  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 20 };
   for (auto num : elems_num) {
     file << "collection " << collection << std::endl;
     file << "operation " << operation << std::endl;

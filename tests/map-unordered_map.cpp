@@ -15,21 +15,22 @@ using namespace std;
 #define rand2 rand() * rand()
 
 template<typename T>
-T* create(int num, int seed) {
+T create(int num, int seed) {
   srand(seed);
-  T* type = new T;
-  while (type->size() < num) {
+  T type;
+  while (type.size() < num) {
     int tmp = rand2;
-    (*type)[tmp] = tmp;
+    type[tmp] = tmp;
   }
   return type;
 }
 
 template<typename T>
 int forward_iteration(int num, int seed) {
-  T* m = create<T>(num, seed);
+  T m = create<T>(num, seed);
   timeit();
-  for (auto i = m->begin(); i != m->end(); i++) {
+  for (auto i = m.begin(); i != m.end(); i++) {
+	// TODO: can we use -> here?
     int tmp = (*i).second;
     int res_tmp = tmp * tmp;
   }
@@ -38,53 +39,48 @@ int forward_iteration(int num, int seed) {
 
 template<typename T>
 int const_forward_iteration(int num, int seed) {
-  T* m = create<T>(num, seed);
-  auto start = chrono::steady_clock::now();
-  for (auto i = m->cbegin(); i != m->cend(); i++) {
+  T m = create<T>(num, seed);
+  timeit();
+  for (auto i = m.cbegin(); i != m.cend(); i++) {
     int tmp = (*i).second;
     int res_tmp = tmp * tmp;
   }
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  return timeit();
 }
 
 template<typename T>
 int merge(int num, int seed) {
-  T* m1 = create<T>(num, seed);
-  T* m2 = create<T>(num, seed+1);
-  auto start = chrono::steady_clock::now();
-  m1->merge(*m2);
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  T m1 = create<T>(num, seed);
+  T m2 = create<T>(num, seed+1);
+  timeit();
+  m1.merge(m2);
+  return timeit();
 }
 
 template<typename T>
 int erase(int num, int seed) {
-  T* m = create<T>(num, seed);
-  auto it = m->begin();
+  T m = create<T>(num, seed);
+  auto it = m.begin();
   for (int i = 0; i < 50'000; i++, it++);
-  auto start = chrono::steady_clock::now();
-  m->erase(it, m->end());
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  timeit();
+  m.erase(it, m.end());
+  return timeit();
 }
 
 template<typename T>
 int clear(int num, int seed) {
-  T* m = create<T>(num, seed);
-  auto start = chrono::steady_clock::now();
-  m->clear();
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  T m = create<T>(num, seed);
+  timeit();
+  m.clear();
+  return timeit();
 }
 
 template<typename T>
 int copy(int num, int seed) {
-  T* m1 = create<T>(num, seed);
-  auto start = chrono::steady_clock::now();
-  T m2 = *m1;
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  T m1 = create<T>(num, seed);
+  timeit();
+  T m2 = m1;
+  return timeit();
 }
 
 int main() {
