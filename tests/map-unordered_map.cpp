@@ -18,7 +18,7 @@ template<typename T>
 T* create(int num, int seed) {
   srand(seed);
   T* type = new T;
-  for (int i = 0; i < num; i++) {
+  while (type->size() < num) {
     int tmp = rand2;
     (*type)[tmp] = tmp;
   }
@@ -28,13 +28,12 @@ T* create(int num, int seed) {
 template<typename T>
 int forward_iteration(int num, int seed) {
   T* m = create<T>(num, seed);
-  auto start = chrono::steady_clock::now();
+  timeit();
   for (auto i = m->begin(); i != m->end(); i++) {
     int tmp = (*i).second;
     int res_tmp = tmp * tmp;
   }
-  auto end = chrono::steady_clock::now();
-  return (end - start) / 1ms;
+  return timeit();
 }
 
 template<typename T>
