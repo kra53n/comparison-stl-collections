@@ -30,11 +30,11 @@ int average(int (*func)(int, int), int num, int seed) {
   std::vector<int> vec;
   for (int i = 0; i < 5; i++) {
     int common_time = 0;
-    while (common_time < 500) {
+	do {
       int tmp = func(num, seed);
       common_time += tmp;
       vec.push_back(tmp);
-    }
+	} while(common_time < 500);
   }
   std::sort(vec.begin(), vec.end());
   int _sum = 0;
@@ -56,7 +56,7 @@ void test(
 ) {
   int seed = 333;
   //                    1 mb
-  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 100 };
+  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 20, 131'072 * 30 };
   for (auto num : elems_num) {
     file << "collection " << collection << std::endl;
     file << "operation " << operation << std::endl;
