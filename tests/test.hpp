@@ -28,14 +28,12 @@ int timeit() {
 // performed.
 int average(int (*func)(int, int), int num, int seed) {
   std::vector<int> vec;
-  for (int i = 0; i < 5; i++) {
-    int common_time = 0;
-	do {
-      int tmp = func(num, seed);
-      common_time += tmp;
-      vec.push_back(tmp);
-	} while(common_time < 500);
-  }
+  int common_time = 0;
+  do {
+    int tmp = func(num, seed);
+    common_time += tmp;
+    vec.push_back(tmp);
+  } while(common_time < 500);
   std::sort(vec.begin(), vec.end());
   int _sum = 0;
   int count = 0;
