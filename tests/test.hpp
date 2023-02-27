@@ -55,7 +55,7 @@ void test(
 ) {
   int seed = 333;
   //                    1 mb
-  int elems_num[3] = { 131'072, 131'072 * 10, 131'072 * 20 };
+  int elems_num[5] = { 131'072, 131'072 * 10, 131'072 * 20, 131'072 * 50, 131'072 * 100 };
   for (auto num : elems_num) {
     file << "collection " << collection << std::endl;
     file << "operation " << operation << std::endl;

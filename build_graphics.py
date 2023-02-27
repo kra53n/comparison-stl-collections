@@ -6,7 +6,7 @@ class Operations(dict):
     def add(self, block: dict):
         operation = block['operation']
         collection = block['collection']
-        vals = {'elems': block['elems_num'], 'time': block['time']}
+        vals = {'elems': int(block['elems_num']), 'time': int(block['time'])}
         if operation in self:
             if collection in self[operation]:
                 self[operation][collection].append(vals)
@@ -25,8 +25,8 @@ def plot(filename, op_name, op_val):
     plt.style.use('Solarize_Light2')
     ax = plt.subplot()
     for name, vals in op_val.items():
-        x = tuple(int(i['elems']) for i in vals)
-        y = tuple(int(i['time']) for i in vals)
+        x = tuple(i['elems'] // 131_072 for i in vals)
+        y = tuple(i['time'] for i in vals)
         ax.plot(x, y, label=name)
     ax.grid(True, linestyle='--')
     ax.set_title(f'comparing {op_name} of {tuple(op_val.keys())}')
