@@ -11,21 +11,19 @@
 int timeit() {
   using namespace std;
   static bool is_started = false;
-  static chrono::steady_clock::time_point start;
+  static chrono::steady_clock::time_point start, end;
   if (is_started) {
-    auto end = chrono::steady_clock::now();
-    is_started = false;
-    return (end - start) / 1ms;
+    end = chrono::steady_clock::now();
   } else {
-    start = chrono::steady_clock::now();
-	is_started = true;
+    start = end = chrono::steady_clock::now();
   }
-  return 0;
+  is_started = !is_started;
+  return (end - start) / 1ms;
 }
 
 // Count average time operation exectution. If operation time execution less
 // than 500 ms, the operation repeated. In total, five such iterations are 
-// performed.
+// performed. 
 int average(int (*func)(int, int), int num, int seed) {
   std::vector<int> vec;
   int common_time = 0;
