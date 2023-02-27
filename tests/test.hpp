@@ -1,9 +1,27 @@
 #pragma once
 
+#include <chrono>
 #include <vector>
 #include <string>
 #include <fstream>
 #include <algorithm>
+
+// First function calling begins to mark the time. Second calling return time
+// from previous calling in ms.
+int timeit() {
+  using namespace std;
+  static bool is_started = false;
+  static chrono::steady_clock::time_point start;
+  if (is_started) {
+    auto end = chrono::steady_clock::now();
+    is_started = false;
+    return (end - start) / 1ms;
+  } else {
+    start = chrono::steady_clock::now();
+	is_started = true;
+  }
+  return 0;
+}
 
 // Count average time operation exectution. If operation time execution less
 // than 500 ms, the operation repeated. In total, five such iterations are 
@@ -45,6 +63,6 @@ void test(
     file << "elems_num " << num << std::endl;
     file << "time " << average(func, num, seed) << std::endl;
     file << std::endl;
-	seed++;
+    seed++;
   }
 }
