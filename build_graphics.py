@@ -34,6 +34,7 @@ def plot(filename, op_name, op_val):
     ax.set_ylabel('time (ms)', loc='top')
     ax.legend()
     plt.savefig(f'{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}.png')
+    plt.close()
 
 
 def load(filename: str) -> Operations:
@@ -54,6 +55,7 @@ def load(filename: str) -> Operations:
 
 
 if __name__ == '__main__':
+    from pprint import pprint
     filename = input('Fielname: ') or 'tests/map-unordered_map.txt'
     ops = load(filename)
     ops.sort()
