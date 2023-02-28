@@ -1,9 +1,9 @@
-import string
+import re
 
-fname = "Tolkien The Lord of the Rings.txt"
-with open("text.txt", "w") as f:
+fname = "doyle_the_adventures.txt"
+with open("text4.txt", "w") as f:
     with open(fname) as f1:
         for line in f1:
             s = line
-            s = s.translate(dict.fromkeys(map(ord, string.punctuation))).lower()
+            s = re.sub(r'[.,"“”\'-?:!;—‘’]', '', s).lower()
             f.write(s)
