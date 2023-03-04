@@ -21,17 +21,18 @@ class Operations(dict):
                 collection_elems.sort(key=lambda x: x['elems'])
 
 
-def plot(filename, op_name, op_val):
+def plot(filename, op_name, op_val, *collection_names):
     plt.style.use('Solarize_Light2')
     ax = plt.subplot()
-    for name, vals in op_val.items():
-        x = tuple(i['elems'] // 131_072 for i in vals)
+    for name in collection_names:
+        vals = op_val[name]
+        x = tuple(i['elems'] // 100_000 for i in vals)
         y = tuple(i['time'] for i in vals)
         ax.plot(x, y, label=name)
     ax.grid(True, linestyle='--')
     ax.set_title(f'comparing {op_name} of {tuple(op_val.keys())}')
-    ax.set_xlabel('elements', loc='right')
-    ax.set_ylabel('time (ms)', loc='top')
+    ax.set_xlabel('количество пар целочисленных типов * 100.000', loc='right')
+    ax.set_ylabel('время (мс)', loc='top')
     ax.legend()
     plt.savefig(f'{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}.png')
     plt.close()
@@ -60,4 +61,4 @@ if __name__ == '__main__':
     ops = load(filename)
     ops.sort()
     for op_name, op_val in ops.items():
-        plot(filename, op_name, op_val)
+        plot(filename, op_name, op_val, "map", "umap")

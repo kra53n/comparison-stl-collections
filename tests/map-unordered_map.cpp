@@ -128,10 +128,12 @@ int main() {
   // test(file, "umap", "const_forward_iteration", const_forward_iteration<umap>);
   // test(file, "map",  "merge", merge<imap>);
   // test(file, "umap", "merge", merge<umap>);
-  // test(file, "map",  "insert", insert<umap>);
+  // test(file, "map",  "insert", insert<imap>);
   // test(file, "umap", "insert", insert<umap>);
-  test(file, "map",  "find", find<umap>);
+
+  test(file, "map",  "find", find<imap>);
   test(file, "umap", "find", find<umap>);
+
   // test(file, "map",  "erase", erase<imap>);
   // test(file, "umap", "erase", erase<umap>);
   // test(file, "map",  "clear", clear<imap>);
