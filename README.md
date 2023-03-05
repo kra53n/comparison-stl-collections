@@ -10,6 +10,11 @@ Compare collections from stl in cpp:
 
 Prepare document with tables and graphics with comparison.
 
+- [array - vector](docs/Отчет по сравнению Vector-VS-Array.doc)
+- [vector - list](docs/vector_list.docx)
+- [map - unordered_map](docs/map-unordered_map.md)
+- [set - unordered_set](Отчет по сравнению set и unordered_set.doc)
+
 ## Progress
 
 - [ ] compare
