@@ -5,7 +5,6 @@
 #include <chrono>
 using namespace std;
 
-//�������� ��� �������� ������ � ������������
 
 void insertvctr(std::vector<int>& a, int N)
 {
