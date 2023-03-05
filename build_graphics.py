@@ -22,7 +22,6 @@ class Operations(dict):
 
 
 def plot(filename, op_name, op_val, *collection_names):
-    plt.style.use('Solarize_Light2')
     ax = plt.subplot()
     for name in collection_names:
         vals = op_val[name]
@@ -30,7 +29,7 @@ def plot(filename, op_name, op_val, *collection_names):
         y = tuple(i['time'] for i in vals)
         ax.plot(x, y, label=name)
     ax.grid(True, linestyle='--')
-    ax.set_title(f'comparing {op_name} of {tuple(op_val.keys())}')
+    ax.set_title(f'{op_name.replace("_", " ")}')
     ax.set_xlabel('количество пар целочисленных типов * 100.000', loc='right')
     ax.set_ylabel('время (мс)', loc='top')
     ax.legend()
@@ -57,7 +56,7 @@ def load(filename: str) -> Operations:
 
 if __name__ == '__main__':
     from pprint import pprint
-    filename = input('Fielname: ') or 'tests/map-unordered_map.txt'
+    filename = input('Filename: ') or 'tests/map-unordered_map.txt'
     ops = load(filename)
     ops.sort()
     for op_name, op_val in ops.items():

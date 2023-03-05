@@ -71,7 +71,7 @@ template<typename T>
 int find(int num, int seed) {
   T m = create<T>(num, seed);
   vector<int> finds;
-  for (auto it = m.begin(); finds.size() < 50'000;) {
+  for (auto it = m.begin(); finds.size() < 30'000;) {
     finds.push_back(it->first);
     int tmp = rand() % 3 + 1;
 	for (int j = 0; j < tmp; j++) {
@@ -80,15 +80,15 @@ int find(int num, int seed) {
   }
   vector<int> unfinds;
   do {
-	int tmp = rand2;
-	if (m.find(tmp) != m.end()) {
+    int tmp = rand2;
+	if (m[tmp]) {
 	  continue;
 	}
 	unfinds.push_back(tmp);
-  } while(unfinds.size() < 50'000);
+  } while(unfinds.size() < 30'000);
   timeit();
   for (auto k : finds) {
-	int v = m.find(k)->second;
+	int v = m[k] ? m[k] : 2;
 	int tmp = v * v;
   }
   return timeit();
@@ -122,22 +122,20 @@ int copy(int num, int seed) {
 
 int main() {
   fstream file("map-unordered_map.txt", fstream::out);
-  // test(file, "map",  "forward_iteration", forward_iteration<imap>);
-  // test(file, "umap", "forward_iteration", forward_iteration<umap>);
-  // test(file, "map",  "const_forward_iteration", const_forward_iteration<imap>);
-  // test(file, "umap", "const_forward_iteration", const_forward_iteration<umap>);
-  // test(file, "map",  "merge", merge<imap>);
-  // test(file, "umap", "merge", merge<umap>);
-  // test(file, "map",  "insert", insert<imap>);
-  // test(file, "umap", "insert", insert<umap>);
-
+  test(file, "map",  "forward_iteration", forward_iteration<imap>);
+  test(file, "umap", "forward_iteration", forward_iteration<umap>);
+  test(file, "map",  "const_forward_iteration", const_forward_iteration<imap>);
+  test(file, "umap", "const_forward_iteration", const_forward_iteration<umap>);
+  test(file, "map",  "merge", merge<imap>);
+  test(file, "umap", "merge", merge<umap>);
+  test(file, "map",  "insert", insert<imap>);
+  test(file, "umap", "insert", insert<umap>);
   test(file, "map",  "find", find<imap>);
   test(file, "umap", "find", find<umap>);
-
-  // test(file, "map",  "erase", erase<imap>);
-  // test(file, "umap", "erase", erase<umap>);
-  // test(file, "map",  "clear", clear<imap>);
-  // test(file, "umap", "clear", clear<umap>);
-  // test(file, "map",  "copy", copy<imap>);
-  // test(file, "umap", "copy", copy<umap>);
+  test(file, "map",  "erase", erase<imap>);
+  test(file, "umap", "erase", erase<umap>);
+  test(file, "map",  "clear", clear<imap>);
+  test(file, "umap", "clear", clear<umap>);
+  test(file, "map",  "copy", copy<imap>);
+  test(file, "umap", "copy", copy<umap>);
 }
