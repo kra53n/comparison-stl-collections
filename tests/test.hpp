@@ -64,3 +64,21 @@ void test(
     seed++;
   }
 }
+
+void test_with_strings(
+  std::fstream& file,
+  std::string collection,
+  std::string operation,
+  int (*func)(int, int)
+) {
+  int seed = 333;
+  int elems_num[4] = { 10'000, 20'000, 40'000, 60'000 };
+  for (auto num : elems_num) {
+    file << "collection " << collection << std::endl;
+    file << "operation " << operation << std::endl;
+    file << "elems_num " << num << std::endl;
+    file << "time " << average(func, num, seed) << std::endl;
+    file << std::endl;
+    seed++;
+  }
+}

@@ -12,6 +12,9 @@ using namespace std;
 #define imap map<int, int>
 #define umap unordered_map<int, int>
 
+#define smap map<string, int>
+#define sumap unordered_map<string, int>
+
 #define rand2 rand() * rand()
 
 template<typename T>
@@ -27,11 +30,12 @@ T create(int num, int seed) {
 
 template<typename T>
 T create_by_strings(int num, int seed) {
-  srand(seed);
+  fstream file("strings.txt", fstream::in);
   T type;
   while (type.size() < num) {
-    int tmp = rand2;
-    type[tmp] = tmp;
+    string tmp;
+    file >> tmp;
+    type[tmp] = rand2;
   }
   return type;
 }
@@ -79,28 +83,52 @@ int insert(int num, int seed) {
 }
 
 template<typename T>
+int insert_strings(int num, int seed) {
+  T m1 = create_by_strings<T>(num, seed);
+  T m2 = create_by_strings<T>(num, seed);
+  auto it = m2.begin();
+  for (int i = 0; i < 5'000; i++, it++);
+  timeit();
+  m1.insert(it, m2.end());
+  return timeit();
+}
+
+template<typename T>
 int find(int num, int seed) {
   T m = create<T>(num, seed);
   vector<int> finds;
   for (auto it = m.begin(); finds.size() < 30'000;) {
     finds.push_back(it->first);
     int tmp = rand() % 3 + 1;
-	for (int j = 0; j < tmp; j++) {
-	  it++;
-	}
+    for (int j = 0; j < tmp; j++) {
+      it++;
+    }
   }
-  vector<int> unfinds;
-  do {
-    int tmp = rand2;
-	if (m[tmp]) {
-	  continue;
-	}
-	unfinds.push_back(tmp);
-  } while(unfinds.size() < 30'000);
   timeit();
   for (auto k : finds) {
-	int v = m[k] ? m[k] : 2;
-	int tmp = v * v;
+    int v = m[k] ? m[k] : 2;
+    int tmp = v * v;
+  }
+  return timeit();
+}
+
+template<typename T>
+int find_strings(int num, int seed) {
+  T m = create_by_strings<T>(num, seed);
+  vector<string> finds;
+  for (auto it = m.begin(); finds.size() < 1'000;) {
+    finds.push_back(it->first);
+    int tmp = rand() % 10 + 1;
+    for (int j = 0; j < tmp; j++) {
+      it++;
+    }
+  }
+  timeit();
+  for (int i = 0; i < 10; i++) {
+    for (auto k : finds) {
+      string v = m.find(k)->first;
+      v = v + " like something useful for compiler";
+    }
   }
   return timeit();
 }
@@ -133,6 +161,10 @@ int copy(int num, int seed) {
 
 int main() {
   fstream file("map-unordered_map.txt", fstream::out);
+  test_with_strings(file, "map",  "find_strings", find_strings<smap>);
+  test_with_strings(file, "umap", "find_strings", find_strings<sumap>);
+  test_with_strings(file, "map",  "insert_strings", insert_strings<smap>);
+  test_with_strings(file, "umap", "insert_strings", insert_strings<sumap>);
   test(file, "map",  "forward_iteration", forward_iteration<imap>);
   test(file, "umap", "forward_iteration", forward_iteration<umap>);
   test(file, "map",  "const_forward_iteration", const_forward_iteration<imap>);

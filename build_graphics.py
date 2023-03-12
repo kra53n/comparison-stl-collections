@@ -49,10 +49,10 @@ def plot(filename, op_name, op_val, *collection_names):
         ax.plot(x, y, label=name)
     ax.grid(True, linestyle='--')
     ax.set_title(f'{op_name.replace("_", " ")}')
-    ax.set_xlabel('количество пар целочисленных типов * 100.000', loc='right')
+    ax.set_xlabel('количество пар целочисленных типов * 10.000', loc='right')
     ax.set_ylabel('время (мс)', loc='top')
     ax.legend()
-    plt.savefig(f'nani/{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}.png')
+    plt.savefig(f'{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}.png')
     plt.close()
 
 
@@ -65,13 +65,13 @@ def percentage_plot(filename, op_name, op_val, *collection_names):
         y2 = op_val[types[1]][i]['time']
         y.append((y1 - y2) / (y1 + y2) * 100)
     ax = plt.subplot()
-    ax.bar(x, y, label=f'разница {collection_names}', width=2)
+    ax.bar(x, y, label=f'разница {collection_names}')
     ax.grid(True, linestyle='--')
     ax.set_title(f'{op_name.replace("_", " ")}')
-    ax.set_xlabel('количество пар целочисленных типов * 100.000', loc='right')
+    ax.set_xlabel('количество пар целочисленных типов * 10.000', loc='right')
     ax.set_ylabel(f'%', loc='top')
     ax.legend()
-    plt.savefig(f'nani/{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}.png')
+    plt.savefig(f'{Path(filename).name[:-len(Path(filename).suffix)]}_{op_name}_bar.png')
     plt.close()
 
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     filename = input('Filename: ') or 'tests/map-unordered_map.txt'
     ops = load(filename)
     ops.sort()
-    # for op_name, op_val in ops.items():
-    #     plot(filename, op_name, op_val, "map", "umap")
+    for op_name, op_val in ops.items():
+        plot(filename, op_name, op_val, "map", "umap")
     for op_name, op_val in ops.items():
         percentage_plot(filename, op_name, op_val, "map", "umap")
