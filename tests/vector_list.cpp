@@ -1,19 +1,19 @@
-п»ї#include <iostream>
-#include <algorithm>
+#include <iostream>
 #include <list>
 #include <vector> 
 #include <chrono>
+#include <iterator>
 using namespace std;
 
-//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//наброски для изучения работы с контейнерами
 
-void insertvctr(std::vector<int>& a, int N)
+void insertvctr(std::vector<int>& a,int N)
 {
     auto begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < N; i++)
+	 for (int i = 0; i < N; i++)
     {
-        a[i] = rand() % 100;
-        //std::cout << a[i] << ",";
+         int num = rand() % 100;
+         a.insert(a.begin(),num);
     }
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
@@ -30,15 +30,15 @@ void insert_lst(std::list<int>& a, int N)
     list<int>::iterator it = a.begin();
     for (int i = 0; i < N; i++)
     {
-        a.insert(it,rand() % 100);
+        a.insert(it, rand() % 100);
     }
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-    std::cout << "The time: " << elapsed_ms.count() << " ms\n";
-  /*  for (list<int>::iterator i = a.begin(); i != a.end(); i++)
-    {
-        cout << *i << " ";
-    }*/
+   std::cout << "The time: " << elapsed_ms.count() << " ms\n";
+     /* for (list<int>::iterator i = a.begin(); i != a.end(); i++)
+      {
+          cout << *i << " ";
+      }*/
 }
 
 void push_frontlist(std::list<int>& a, int N)
@@ -47,7 +47,7 @@ void push_frontlist(std::list<int>& a, int N)
     for (int i = 0; i < N; i++)
     {
         a.push_front(rand() % 100);
-        // a.pop_back();
+       // a.pop_back();
     }
 
     auto end = std::chrono::steady_clock::now();
@@ -66,17 +66,17 @@ void push_backlist(std::list<int>& a, int N)
     for (int i = 0; i < N; i++)
     {
         a.push_back(rand() % 100);
-        //  a.pop_front();
+      //  a.pop_front();
     }
 
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
     std::cout << "The time: " << elapsed_ms.count() << " ms\n";
 
-    /*for (list<int>::iterator i = a.begin(); i != a.end(); i++)
+    for (list<int>::iterator i = a.begin(); i != a.end(); i++)
     {
         cout << *i << " ";
-    }*/
+    }
 }
 
 void pop_frontlst(std::list<int>& a, int c)
@@ -121,7 +121,7 @@ void vctr_pop_back(std::vector<int>& a, int c)
 
     for (int i = 0; i < c; i++)
     {
-        a.pop_back();
+        a.pop_back();       
     }
 
     auto end = std::chrono::steady_clock::now();
@@ -129,65 +129,69 @@ void vctr_pop_back(std::vector<int>& a, int c)
     std::cout << "The time: " << elapsed_ms.count() << " ms\n";
 }
 
-void sort_vctr(std::vector<int>& a, int N)
+void push_random_vctr(std::vector<int>& a,int c,int N)
 {
     auto begin = std::chrono::steady_clock::now();
-    std::sort(a.begin(), a.end());
+    
+
+    for (int i = 0; i < c; i++)
+    {
+        int num = rand() % 100;
+        a.insert(a.begin() + rand() % 10, num); 
+        N+=1;
+    }
+
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
     std::cout << "The time: " << elapsed_ms.count() << " ms\n";
+    /*for (int i = 0; i < N; i++)
+    {
+               std::cout << a[i] << ",";
+    }*/
 }
 
-void sort_lst(std::list<int>& a, int N)
+void push_random_list(std::list<int>& a, int c,int N)
 {
     auto begin = std::chrono::steady_clock::now();
-    a.sort();
+    list <int>::iterator it;
+    
+    for (int i = 0; i < c; i++)
+    {
+        std::list < int > ::iterator newIterator = a.begin();
+    
+        std::advance(newIterator, rand() % 100);
+        a.insert(newIterator, rand()%100);
+    }
+
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
     std::cout << "The time: " << elapsed_ms.count() << " ms\n";
+
    /* for (list<int>::iterator i = a.begin(); i != a.end(); i++)
     {
         cout << *i << " ";
     }*/
 }
 
-void vctr_push_back(std::vector<int>& a, int N)
-{
-    auto begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < N; i++)
-    {
-        int num = rand() % 100;
-        a.push_back(num);
-    }
-    
-    auto end = std::chrono::steady_clock::now();
-    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
-    std::cout << "The time: " << elapsed_ms.count() << " ms\n";
-    /*for (int i = 0; i < N; i++)
-    {
-       std::cout << a[i] << ",";
-    }*/
-}
-
 int main()
 {
     srand(time(NULL));
-    
-    int N = 9000000;
+
+    int N = 90000;
     int c = 90000;
-    std::vector <int> vctr(N);
+	std::vector <int> vctr(N);
     std::list <int> lst(N);
-   
-    vctr_push_back(vctr, N);
-    //insert_lst(lst, N);
-    //insertvctr(vctr, N);
-    //push_frontlist(lst, N);
-    // push_backlist(lst, N);
-    //cout  << "\n ";
-    //pop_frontlst(lst, c);
-    //pop_backlst(lst, c);
+
+   //insertvctr(vctr, N);
+   //cout << "\n ";
+   //push_random_vctr(vctr, c,N);
+   //push_frontlist(lst, N);
+   // push_backlist(lst, N);
+    insert_lst(lst, N);
+    cout  << "\n ";
+    push_random_list(lst, c, N);
+   //pop_frontlst(lst, c);
+   //pop_backlst(lst, c);
     //vctr_pop_back(vctr, c);
-    // sort_vctr(vctr, N);
-    //sort_lst(lst, N);
-    return 0;
+	return 0;
 }
