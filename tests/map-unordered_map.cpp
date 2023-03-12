@@ -26,6 +26,17 @@ T create(int num, int seed) {
 }
 
 template<typename T>
+T create_by_strings(int num, int seed) {
+  srand(seed);
+  T type;
+  while (type.size() < num) {
+    int tmp = rand2;
+    type[tmp] = tmp;
+  }
+  return type;
+}
+
+template<typename T>
 int forward_iteration(int num, int seed) {
   T m = create<T>(num, seed);
   timeit();
